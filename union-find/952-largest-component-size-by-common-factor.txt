@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int largestComponentSize(vector<int>& A) {
+        int m = A.size(), res = 0, mx = 0;;
+        unordered_map<int, int> map;
+        for(int t : A) mx = max(mx, t);
+        vector<int> root(mx + 1);
+        for (int i = 1; i <= mx; ++i) root[i] = i;
+        for (int num : A) {
+            for (int d = sqrt(num); d>=2; d--) {
+                if(num%d == 0) {
+                    root[getroot(root,num)] = root[getroot(root,d)];
+                    root[getroot(root,num)] = root[getroot(root,num/d)];
+                }
+            }
+        }
+        for(int num: A) {
+            res = max(res, ++map[getroot(root,num)]);
+        }
+        return res;
+    }
+    
+    int getroot(vector<int> &root, int i) {
+        while (i != root[i]) {
+            root[i] = root[root[i]];
+            i = root[i];
+        }
+        return i;
+    }
+};
