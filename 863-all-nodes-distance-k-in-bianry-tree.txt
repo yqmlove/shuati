@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int K) {
+        vector<int> res;
+        if(!root) return res;
+        unordered_map <TreeNode*, TreeNode*> m;
+        unordered_set<TreeNode*> visited;
+        findParent(root,m);
+        dfs(target, m, K,visited, res);
+        return res;
+    }
+    
+    void findParent(TreeNode* root, unordered_map<TreeNode*, TreeNode*> &m) {
+        if (!root) return;
+        if(root->left) m[root->left] = root;
+        if(root->right) m[root->right] = root;
+        findParent(root->left, m);
+        findParent(root->right,m);        
+    }
+    
+    void dfs(TreeNode* target, unordered_map<TreeNode*, TreeNode*> &m, int k, unordered_set<TreeNode*>& visited, vector<int>& res) {
+        if (visited.count(target)) return;
+        visited.insert(target);
+        if (k == 0) {
+            res.push_back(target->val);
+            return;
+        }
+        if(target->left) dfs(target->left, m, k-1, visited, res);
+        if(target->right) dfs(target->right, m, k-1, visited, res);
+        if(m[target]) dfs(m[target], m, k-1, visited, res);
+    }
+};
