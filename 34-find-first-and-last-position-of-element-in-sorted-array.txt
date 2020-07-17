@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> res(2, -1);
+        int l = 0, r = nums.size();
+        while (l < r) { // find the first number which is not less than target
+            int mid = l + (r - l)/2;
+            if(nums[mid] < target) l = mid + 1;
+            else r = mid;
+        }
+        if (r == nums.size() || nums[r] != target) return res;
+        res[0] = r;
+        r = nums.size();
+        while (l < r) { // find the first number which is larger than target
+            int mid = l + (r - l)/2;
+            if (nums[mid] <= target) l = mid + 1;
+            else r = mid;
+        }
+        res[1] = r - 1;
+        return res;
+    }
+    
+};
