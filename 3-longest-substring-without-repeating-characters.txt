@@ -13,3 +13,22 @@ public:
         return res;
     }
 };
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int size = s.size();
+        if (s.empty()) return 0;
+        int start =0, end =0;
+        int hash[256] = {0};
+        int res = -1;
+        while (end<size)
+        {
+            if (hash[s[end]]==0)
+                hash[s[end++]]++;
+            else
+                hash[s[start++]]--;
+            res = max(res,end-start);    
+        }
+        return res;
+    }
+};
