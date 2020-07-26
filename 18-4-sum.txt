@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int m = nums.size();
+        vector<vector<int>> res;
+        if (m<4) return res;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < m - 3; i++) {
+            if(i > 0 && nums[i] == nums[i-1]) continue;
+            for(int j = i + 1; j < m - 2; j++) {
+                if(j > i + 1 && nums[j] == nums[j-1]) continue;
+                int twosum = target - nums[i] - nums[j];
+                int l = j+1, r = m - 1;
+                while(l < r) {
+                    int t = nums[l] + nums[r];
+                    if(t == twosum) {
+                        vector<int> tmp = {nums[i], nums[j], nums[l], nums[r]};
+                        res.push_back(tmp);
+                        while(l < r && nums[l+1] == nums[l]) l++;
+                        while(l < r && nums[r] == nums[r-1]) r--;
+                        l++;
+                        r--;
+                    }
+                    else if(t < twosum) l++;
+                    else r--;
+                }
+            }
+        }
+        return res;
+    }
+};
+
