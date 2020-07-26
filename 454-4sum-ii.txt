@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        int res = 0, size = A.size();
+        unordered_map<int, int> m;
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                m[A[i] + B[j]]++;
+            }
+        }
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                int target = -1 * (C[i] + D[j]);
+                res += m[target];
+            }
+        }
+        return res;
+    }
+};
