@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
+        int res = 0, curMax = 0, i = 0, m = difficulty.size();
+        vector<pair<int, int>> jobs;
+        for(int j = 0; j < m; j++) {
+            jobs.push_back({difficulty[j], profit[j]});
+        }
+        sort(jobs.begin(), jobs.end());
+        sort(worker.begin(), worker.end());
+        for(int ability : worker) {
+            while(i < m && ability >= jobs[i].first) {
+                curMax = max(curMax, jobs[i++].second);
+            }
+            res += curMax;
+        }
+        return res;
+    }
+};
+
